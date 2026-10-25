@@ -1,0 +1,19 @@
+{
+  "name": "Was essen wir?",
+  "version": "1.0.0",
+  "slug": "was_essen_wir",
+  "url": "https://github.com/trs3/was-essen-wir-addon",
+  "description": "Gemeinsamer Essensplan mit Gerichten, Einkaufsliste und Kalender-Abo",
+  "arch": ["amd64", "aarch64"],
+  "startup": "application",
+  "boot": "auto",
+  "init": true,
+  "timeout": 30,
+  "ports": {"8000/tcp": 3000},
+  "ports_description": {"8000/tcp": "Weboberfläche und privates Kalender-Abo"},
+  "webui": "http://[HOST]:[PORT:8000]",
+  "watchdog": "http://[HOST]:[PORT:8000]/api/health",
+  "backup": "cold",
+  "options": {"public_origin": "", "cookie_secure": false},
+  "schema": {"public_origin": "str", "cookie_secure": "bool"}
+}

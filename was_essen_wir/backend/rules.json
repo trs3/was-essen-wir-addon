@@ -1,0 +1,12 @@
+[
+ {"words":["spaghetti","nudel","pasta","lasagne","bolognese"],"category":"Nudelgerichte","tags":["Nudeln"]},
+ {"words":["reis","risotto","paella"],"category":"Reisgerichte","tags":["Reis"]},
+ {"words":["kartoffel","puffer","gnocchi"],"category":"Kartoffelgerichte","tags":["Kartoffeln"]},
+ {"words":["gemüse","salat","brokkoli"],"category":"Gemüsegerichte","tags":["Gemüse"]},
+ {"words":["schnitzel","steak","hähnchen","gulasch"],"category":"Fleischgerichte","tags":["Fleisch"]},
+ {"words":["fisch","lachs","forelle"],"category":"Fischgerichte","tags":["Fisch"]},
+ {"words":["suppe","eintopf"],"category":"Suppen und Eintöpfe","tags":["Suppe"]},
+ {"words":["pfannkuchen","milchreis","kaiserschmarrn"],"category":"Süßspeisen","tags":["Süß"]},
+ {"words":["pizza","auflauf","quiche"],"category":"Pizza und Ofengerichte","tags":["Ofen"]},
+ {"words":["brotzeit","sandwich","stulle"],"category":"Brotzeit und kalte Küche","tags":["Kalt"]}
+]
