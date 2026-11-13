@@ -44,7 +44,34 @@ button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit
 .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
 .frequency-control p { font-size: 12px; margin: 12px 0 0; }
 
+.modal.dish-editor { display: flex; flex-direction: column; overflow: hidden; }
+.dish-editor > .section-title, .dish-editor > .error { flex-shrink: 0; }
+.dish-editor form { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.dish-editor-fields { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 4px; }
+.dish-editor-actions { display: flex; flex-shrink: 0; gap: 10px; padding-top: 16px; margin-top: 8px; border-top: 1px solid var(--line); background: var(--card); }
+.dish-editor-actions button { flex: 1; }
+.editor-field { margin: 15px 0; }
+.field-heading { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 32px; }
+.dish-editor .field-heading label { display: inline; margin: 0; }
+.field-heading output { margin-left: auto; font-size: 12px; }
+.help-button { display: inline-flex; justify-content: center; align-items: center; width: 28px; min-height: 28px; padding: 0; border-radius: 50%; font-size: 13px; color: var(--green); }
+.field-help { display: inline-flex; }
+.field-tooltip { position: absolute; top: 100%; left: 0; right: 0; z-index: 2; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); box-shadow: var(--shadow); font-size: 12px; line-height: 1.6; font-weight: 400; }
+.dish-editor details { border-top: 1px solid var(--line); margin: 12px 0; }
+.dish-editor summary { min-height: 44px; color: var(--text); }
+
 .calendar-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.plan-grid .day-title { flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.day-title .day-weekday { font-size: 26px; font-weight: 700; line-height: 1.25; color: var(--text); }
+.day-title time { font-size: 16px; color: var(--muted); }
+.cooking-history .history-row { flex-wrap: wrap; gap: 12px; }
+.cooking-history .history-day { flex: 1 1 190px; min-width: 0; }
+.history-day time { font-size: 12px; color: var(--muted); }
+.history-day strong { overflow-wrap: anywhere; }
+.history-day .history-status, .history-day small { display: block; margin-top: 6px; }
+.cooking-history .history-actions { flex: 0 1 auto; display: flex; flex-wrap: wrap; gap: 6px; }
+.cooking-history .history-actions button { white-space: normal; }
+.history-more { margin-top: 20px; width: 100%; }
 .calendar-subscription input { font-size: 16px; }
 .calendar-subscription .calendar-privacy { font-size: 12px; }
 .calendar-download { display: inline-block; padding: 12px 0; color: var(--green); font-size: 13px; }
