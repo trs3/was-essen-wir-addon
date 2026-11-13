@@ -24,11 +24,13 @@ Der Essensplan öffnet ein eigenes Browserfenster und verwendet seinen eigenen H
 
 Weitere Informationen zu Port, HTTPS, Sicherungen und Fehlerdiagnose: [App-Dokumentation](was_essen_wir/DOCS.md).
 
-## Version 1.1.0
+## Version 1.1.1
+
+Version 1.1.1 behebt übergroße Abstände und versetzten Text bei freien Tagen in Historie und Wochenplan.
 
 Die Historie zeigt alle Tage mit Vorschlägen und direkter Kochbestätigung. Der Wochenplan hat größere Tagesüberschriften und „Neuer Vorschlag“. Das Gerichteformular bietet eingeklappte Notizen/Zutaten, sichtbare Speichern-/Abbrechen-Buttons und kurze Hilfetexte.
 
-Zum Aktualisieren die vollständigen Paketdateien im Repository ersetzen, im App-Store nach Updates suchen und Version 1.1.0 installieren. Die App nicht deinstallieren; vorhandene Daten bleiben im App-Verzeichnis.
+Zum Aktualisieren die vollständigen Paketdateien im Repository ersetzen, im App-Store nach Updates suchen und Version 1.1.1 installieren. Die App nicht deinstallieren; vorhandene Daten bleiben im App-Verzeichnis.
 
 ## Stand der Prüfung
 

@@ -1,3 +1,7 @@
+# 1.1.1
+
+- Darstellungsfehler bei freien Tagen in der Historie und im Wochenplan behoben: Statuszeilen bleiben linksbündig und erhalten keine übergroßen Innenabstände.
+
 # 1.1.0
 
 - Historie als durchgehende Tagesliste mit gespeicherten Vorschlägen und tatsächlichen Kochereignissen.
