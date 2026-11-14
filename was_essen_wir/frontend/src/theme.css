@@ -1,34 +1,34 @@
 /* Palette from the supplied reference. Text stays on quiet surfaces;
    the full-strength gradients mark the different planning states. */
 :root {
-  --bg: #f5f4fc;
+  --bg: #f1f0f7;
   --card: #ffffff;
-  --text: #282442;
-  --muted: #66617b;
+  --text: #241e38;
+  --muted: #44364f;
   --line: #dedbed;
   --green: #5142c7;
-  --soft: #eeebfb;
+  --soft: #d9d1ee;
   --shadow: 0 8px 35px #30256009;
   --suggested-gradient: linear-gradient(115deg, #299bff, #1200ff);
   --confirmed-gradient: linear-gradient(115deg, #00ff5b, #0014ff);
   --overdue-gradient: linear-gradient(115deg, #ffe53b, #ff2525);
   --cooked-gradient: linear-gradient(115deg, #ff2cdf, #0014ff);
   --neutral-gradient: linear-gradient(115deg, #a8a3be, #77718d);
-  --suggested-accent: #126bac;
-  --confirmed-accent: #15724b;
-  --overdue-accent: #99500f;
-  --cooked-accent: #15724b;
-  --cooked-edge: #8055c6;
-  --cooked-surface: linear-gradient(120deg, #f6edff, #eee7ff);
-  --suggested-surface: linear-gradient(120deg, #e7f0ff, #e6eaff);
-  --confirmed-surface: linear-gradient(120deg, #edfff3, #eef7ff);
-  --overdue-surface: linear-gradient(120deg, #fff8dd, #ffede3);
-  --quiet-surface: #f5f4fa;
-  --hero-wash: #ffffffbd;
-  --warm-surface: #fff2e2;
-  --warm-text: #8b420c;
-  --danger-surface: #ffedf3;
-  --danger-text: #a51b50;
+  --suggested-accent: #124c85;
+  --confirmed-accent: #12613a;
+  --overdue-accent: #783708;
+  --cooked-accent: #0c4526;
+  --cooked-edge: #592784;
+  --cooked-surface: linear-gradient(120deg, #d2b4f3, #bda7ed);
+  --suggested-surface: linear-gradient(120deg, #b8d5ff, #aebdf6);
+  --confirmed-surface: linear-gradient(120deg, #abe7bd, #a5d4d8);
+  --overdue-surface: linear-gradient(120deg, #ffda76, #ffb685);
+  --quiet-surface: #e2e0ec;
+  --hero-wash: #ffffff66;
+  --warm-surface: #ffda9a;
+  --warm-text: #753309;
+  --danger-surface: #ffcada;
+  --danger-text: #90113e;
   background: var(--bg);
   color: var(--text);
   color-scheme: light;
@@ -321,3 +321,9 @@ header { min-height: 100px; padding-top: 12px; padding-bottom: 12px; }
 }
 
 .toolbar .new-dish-button { flex-shrink: 0; white-space: nowrap; }
+
+/* In light mode the hero shares the stronger card gradients. */
+:root[data-theme=light] .hero[data-state] { background: var(--state-surface); }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme=dark]) .hero[data-state] { background: var(--state-surface); }
+}

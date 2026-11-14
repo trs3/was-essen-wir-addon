@@ -1,3 +1,10 @@
+# 1.4.1
+
+- Kräftigere, weniger pastellige Farbflächen für Vorschläge, eingeplante Gerichte, Gekochtes und Hinweise in der hellen Ansicht.
+- Dunklere Textfarben mit geprüften Kontrasten auf den neuen Flächen.
+- Die helle Tageskarte verwendet die gleichen kräftigeren Verläufe wie die übrigen Karten.
+- Die dunkle Ansicht bleibt erhalten.
+
 # 1.4.0
 
 - In der Historie öffnet „Ändern“ die Erfassung. „Nichts“ unter „Als gekocht speichern“ markiert einen Tag als „Nichts gekocht“, auch zur Korrektur vorhandener Kochereignisse.
