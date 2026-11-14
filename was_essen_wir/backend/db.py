@@ -47,6 +47,11 @@ def init():
             c.execute('UPDATE dishes SET version=version+1')
             c.execute("UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='revision'")
             c.execute('INSERT INTO migrations VALUES(3)')
+        if not c.execute('SELECT 1 FROM migrations WHERE version=4').fetchone():
+            c.execute('ALTER TABLE plans ADD COLUMN original_dish_id INTEGER REFERENCES dishes(id)')
+            c.execute('UPDATE plans SET version=version+1')
+            c.execute("UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='revision'")
+            c.execute('INSERT INTO migrations VALUES(4)')
         c.commit()
     except BaseException:
         c.rollback()

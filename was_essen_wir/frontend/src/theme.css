@@ -301,3 +301,23 @@ header { min-height: 100px; padding-top: 12px; padding-bottom: 12px; }
 #dish-effort[data-effort=normal], #dish-effort option[data-effort=normal] { color: var(--suggested-accent); }
 #dish-effort[data-effort=elaborate], #dish-effort option[data-effort=elaborate] { color: var(--overdue-accent); }
 #dish-effort { font-weight: 600; }
+
+.cooking-conflict-actions { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; margin-top: 24px; }
+.cooking-conflict-actions button { min-height: 44px; padding: 10px 16px; font-size: 14px; }
+.cooking-conflict-actions .primary { flex: 1; }
+.cooking-conflict strong { color: var(--text); }
+
+.cooking-conflict { background: var(--overdue-surface); color: var(--overdue-accent); }
+.cooking-conflict h2, .cooking-conflict p, .cooking-conflict strong { color: var(--overdue-accent); }
+
+.plan-trigger { position: relative; flex-shrink: 0; }
+.plan-trigger > button { font-size: 14px; }
+.plan-trigger > small { position: absolute; top: calc(100% + 6px); right: 0; width: max-content; max-width: min(280px, calc(100vw - 36px)); text-align: right; font-size: 12px; }
+.period:has(.plan-trigger) { margin-bottom: 44px; }
+
+.hero-actions .cook-button { background: #15724b; color: #fff; }
+@media (hover: hover) {
+  .hero-actions button.cook-button:not(:disabled):hover { background: #0c5838; color: #fff; }
+}
+
+.toolbar .new-dish-button { flex-shrink: 0; white-space: nowrap; }

@@ -24,15 +24,15 @@ Der Essensplan öffnet ein eigenes Browserfenster und verwendet seinen eigenen H
 
 Weitere Informationen zu Port, HTTPS, Sicherungen und Fehlerdiagnose: [App-Dokumentation](was_essen_wir/DOCS.md).
 
-## Version 1.3.0
+## Version 1.4.0
 
-Die Historie zeigt zunächst sieben Tage mit aufklappbaren älteren Einträgen und Statistiken daneben. Haushalt, Kalender und Datensicherung liegen jetzt in einer eigenen Ansicht „Einstellungen“, erreichbar auf jeder Seite rechts oben. Dazu kommen verbesserte Abstände, klarere Rückfragen zu Kochbestätigungen, farbige Aufwand-Auswahl und die Korrektur der versehentlich sichtbaren „0“ auf Gerichtskarten.
+Historientage lassen sich über „Ändern → Nichts“ als „Nichts gekocht“ erfassen. Die ursprüngliche Planung bleibt sichtbar; die Statistik zählt nur tatsächliche Kochereignisse. Hinweise auf erneut eingeplante Gerichte erscheinen in einem gelb-orangen App-Dialog. Außerdem stehen Lieblingsgerichte in der Gerichtsauswahl zuerst und die Tageskarte bietet „Selbst wählen“, einen Einplanen-Haken und einen grünen Gekocht-Button.
 
-Im App-Store nach Updates suchen und Version 1.3.0 installieren. Vorher eine Sicherung erstellen. Die App nicht deinstallieren; vorhandene Daten bleiben im App-Verzeichnis.
+Im App-Store nach Updates suchen und Version 1.4.0 installieren. Vorher eine Sicherung erstellen. Schema-Version 4 wird beim Start automatisch eingerichtet und erhält die bestehenden Daten. Die App nicht deinstallieren.
 
 ## Stand der Prüfung
 
-Für Version 1.3.0 wurden Frontend-Build, 9 Frontend-Tests, 79 Backend-/Pakettests und die ZIP-Struktur geprüft. Die Frontend-Tests decken auch das Auf- und Zuklappen der älteren Historientage ab. Für diesen Stand wurde kein neuer Docker-/Supervisor-Prüflauf ausgeführt. Die folgenden Container-Ergebnisse beziehen sich auf Version 1.0.0.
+Für Version 1.4.0 wurden Frontend-Build, 14 Frontend-Tests, 84 Backend-/Pakettests und die ZIP-Struktur geprüft. Die Prüfungen umfassen Speicherung und Korrektur von „Nichts gekocht“, Statistik, Versionskonflikte, ursprüngliche Planung, vollständige JSON-Sicherung und Migration sowie die Termintexte und Aktionen des neuen Dialogs. Für diesen Stand wurde kein neuer Docker-/Supervisor-Prüflauf ausgeführt. Die folgenden Container-Ergebnisse beziehen sich auf Version 1.0.0.
 
 
 Das Paket wurde unter Docker Desktop auf Linux arm64 gebaut. Anmeldung, Kalender-Abo und Datenerhalt nach Container-Neustart wurden mit einem isolierten Test-Volume geprüft. Ein Start im echten Home-Assistant-Supervisor sowie ein amd64-Prüflauf stehen noch aus.

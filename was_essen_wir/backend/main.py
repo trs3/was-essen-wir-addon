@@ -129,7 +129,7 @@ def suggest(c, day, previous=None):
     rejected = [r[0] for r in c.execute('SELECT dish_id FROM rejections WHERE day=?',(day,))]
     chosen = planner.choose(all_dishes,day,history,neighbors,excluded,rejected,json.loads(setting(c,'weights','{}')),previous,quick_only=target.weekday() in quick_weekdays(c))
     if chosen:
-        c.execute("INSERT INTO plans(day,dish_id,status) VALUES(?,?,'suggested') ON CONFLICT(day) DO UPDATE SET dish_id=excluded.dish_id,status='suggested',version=plans.version+1",(day,chosen['id']))
+        c.execute("INSERT INTO plans(day,dish_id,status) VALUES(?,?,'suggested') ON CONFLICT(day) DO UPDATE SET dish_id=excluded.dish_id,status='suggested',original_dish_id=NULL,version=plans.version+1",(day,chosen['id']))
     return chosen
 
 
@@ -348,7 +348,7 @@ def edit_dish(id:int,b:Dish):
 def delete_dish(id:int,version:int):
     with db.transaction(True) as c:
         check_version(c.execute('SELECT * FROM dishes WHERE id=?',(id,)).fetchone(),version)
-        if c.execute('SELECT 1 FROM history WHERE dish_id=? UNION SELECT 1 FROM plans WHERE dish_id=?',(id,id)).fetchone():
+        if c.execute('SELECT 1 FROM history WHERE dish_id=? UNION SELECT 1 FROM plans WHERE dish_id=? OR original_dish_id=?',(id,id,id)).fetchone():
             c.execute('UPDATE dishes SET active=0,version=version+1 WHERE id=?',(id,)); return {'deactivated':True}
         c.execute('DELETE FROM rejections WHERE dish_id=?',(id,)); c.execute('DELETE FROM dishes WHERE id=?',(id,))
     return {'ok':True}
@@ -376,7 +376,7 @@ def plan_action(day:str,b:PlanAction):
         elif b.action in ('fixed','confirmed','empty'):
             id = None if b.action=='empty' else b.dish_id or (row['dish_id'] if row else None)
             if b.action != 'empty': dish_exists(c,id)
-            c.execute('INSERT INTO plans(day,dish_id,status) VALUES(?,?,?) ON CONFLICT(day) DO UPDATE SET dish_id=excluded.dish_id,status=excluded.status,version=plans.version+1',(day,id,b.action))
+            c.execute('INSERT INTO plans(day,dish_id,status) VALUES(?,?,?) ON CONFLICT(day) DO UPDATE SET dish_id=excluded.dish_id,status=excluded.status,original_dish_id=NULL,version=plans.version+1',(day,id,b.action))
         else: raise HTTPException(422,'Unbekannte Aktion')
     return {'ok':True,'same_dish':same_dish}
 
@@ -427,6 +427,29 @@ def cook(b:Cook):
                     unfilled.append({'day':row['day'],'reason':suggestion_failure(c,row['day'])})
             else: conflicts.append(dict(row))
     return {'conflicts':conflicts,'replaced':replaced,'unfilled':unfilled}
+
+class NoCooking(BaseModel):
+    day: date
+    version: int = 0
+    plan_version: int = 0
+
+
+@app.post('/api/not-cooked')
+def not_cooked(b:NoCooking):
+    day = b.day.isoformat()
+    with db.transaction(True) as c:
+        if day > today(c): raise HTTPException(422,'Zukünftige Tage können noch nicht als nicht gekocht erfasst werden')
+        event = c.execute('SELECT * FROM history WHERE day=?',(day,)).fetchone()
+        if event: check_version(event,b.version)
+        elif b.version: raise HTTPException(409,'Kochhistorie inzwischen geändert')
+        planned = c.execute('SELECT * FROM plans WHERE day=?',(day,)).fetchone()
+        if planned: check_version(planned,b.plan_version)
+        elif b.plan_version: raise HTTPException(409,'Plan inzwischen geändert')
+        original = (planned['dish_id'] or planned['original_dish_id']) if planned else None
+        c.execute("INSERT INTO plans(day,dish_id,status,original_dish_id) VALUES(?,NULL,'empty',?) ON CONFLICT(day) DO UPDATE SET dish_id=NULL,status='empty',original_dish_id=excluded.original_dish_id,version=plans.version+1",(day,original))
+        c.execute('DELETE FROM history WHERE day=?',(day,))
+    return {'ok':True}
+
 
 class HistoryEdit(BaseModel):
     day: date
@@ -552,7 +575,9 @@ def import_data(b:ImportData):
                 for p in data.get('plans',[]):
                     day=date.fromisoformat(p['day']).isoformat(); id=mapping[p['dish_id']] if p['dish_id'] is not None else None
                     if p['status'] not in ('suggested','confirmed','fixed','empty') or (p['status']=='empty')!=(id is None): raise ValueError('Ungültiger Planstatus')
-                    c.execute('INSERT INTO plans(day,dish_id,status) VALUES(?,?,?)',(day,id,p['status']))
+                    original=mapping[p['original_dish_id']] if p.get('original_dish_id') is not None else None
+                    if original is not None and p['status']!='empty': raise ValueError('Ursprüngliche Planung nur bei freien Tagen erlaubt')
+                    c.execute('INSERT INTO plans(day,dish_id,status,original_dish_id) VALUES(?,?,?,?)',(day,id,p['status'],original))
                 for r in data.get('rejections',[]): c.execute('INSERT INTO rejections VALUES(?,?)',(date.fromisoformat(r['day']).isoformat(),mapping[r['dish_id']]))
                 for s in data.get('shopping',[]):
                     si=ShoppingItem.model_validate(s)

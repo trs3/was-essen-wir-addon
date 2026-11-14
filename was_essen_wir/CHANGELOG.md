@@ -1,3 +1,16 @@
+# 1.4.0
+
+- In der Historie öffnet „Ändern“ die Erfassung. „Nichts“ unter „Als gekocht speichern“ markiert einen Tag als „Nichts gekocht“, auch zur Korrektur vorhandener Kochereignisse.
+- Die ursprüngliche Planung bleibt unter „Eigentlich war geplant: …“ sichtbar; „Nichts gekocht“ zählt nicht für die Kochstatistik.
+- Schema-Version 4 speichert die ursprüngliche Gerichtsauswahl freier Tage. Vollständige JSON-Sicherungen erhalten diese Angabe; ältere Sicherungen bleiben wiederherstellbar.
+- Erneut eingeplante Gerichte werden nach dem Kochen in einem gelb-orangen App-Dialog mit Kochtag und Abstand zum nächsten Termin angezeigt. „Neuen Vorschlag machen“ ersetzt den Termin, „Passt“ behält ihn.
+- Lieblingsgerichte stehen in der Gerichtsauswahl zuerst und werden mit einem Herz markiert; beide Gruppen sind alphabetisch sortiert.
+- Tageskarte mit „Selbst wählen“, Haken zum Einplanen und grünem „Gekocht“-Button.
+- Erklärungstexte gestrafft, neuer Wochenplan-Spruch und Planungshinweis direkt unter dem Planungsbutton.
+- Einzeiliger Button „Neues Gericht hinzufügen“ in der Gerichteübersicht.
+
+Vor dem Update eine Sicherung erstellen. Bestehende Daten werden beim Start automatisch migriert. Zum Aktualisieren die App nicht deinstallieren.
+
 # 1.3.0
 
 - Historie zeigt zunächst sieben Tage; ältere Einträge lassen sich auf- und zuklappen sowie in Schritten von 30 Tagen nachladen.
