@@ -24,17 +24,15 @@ Der Essensplan öffnet ein eigenes Browserfenster und verwendet seinen eigenen H
 
 Weitere Informationen zu Port, HTTPS, Sicherungen und Fehlerdiagnose: [App-Dokumentation](was_essen_wir/DOCS.md).
 
-## Version 1.1.1
+## Version 1.2.0
 
-Version 1.1.1 behebt übergroße Abstände und versetzten Text bei freien Tagen in Historie und Wochenplan.
+Neue Farbgestaltung und kompaktere Karten für Heute, Wochenplan, Gerichte und Historie. Ein einheitlicher Status „Eingeplant“, passende Legenden, kontrastreiche rahmenlose Buttons, sichtbare inaktive Gerichte und Chart-Statistiken erleichtern die Bedienung. Das Gerichteformular bietet ein auswählbares Herz im Kopfbereich und den Gerichtsnamen als Überschrift. Erfolgsmeldungen verschwinden nach fünf Sekunden, ohne Inhalte zu verschieben.
 
-Die Historie zeigt alle Tage mit Vorschlägen und direkter Kochbestätigung. Der Wochenplan hat größere Tagesüberschriften und „Neuer Vorschlag“. Das Gerichteformular bietet eingeklappte Notizen/Zutaten, sichtbare Speichern-/Abbrechen-Buttons und kurze Hilfetexte.
-
-Zum Aktualisieren die vollständigen Paketdateien im Repository ersetzen, im App-Store nach Updates suchen und Version 1.1.1 installieren. Die App nicht deinstallieren; vorhandene Daten bleiben im App-Verzeichnis.
+Im App-Store nach Updates suchen und Version 1.2.0 installieren. Vorher eine Sicherung erstellen. Die App nicht deinstallieren; vorhandene Daten bleiben im App-Verzeichnis.
 
 ## Stand der Prüfung
 
-Für Version 1.1.0 wurden Frontend-Build, 8 Frontend-Tests, 79 Backend-/Pakettests und die ZIP-Struktur erfolgreich geprüft. Ein erneuter Container-Prüflauf war mangels laufendem Docker-Dienst nicht möglich. Die folgenden Container-Ergebnisse beziehen sich auf Version 1.0.0.
+Für Version 1.2.0 wurden Frontend-Build, 9 Frontend-Tests, 79 Backend-/Pakettests und die ZIP-Struktur geprüft. Die dunkle Desktop-Oberfläche wurde während der Gestaltung in Safari mit separaten Testdaten betrachtet. Für diesen Stand wurde kein neuer Docker-/Supervisor-Prüflauf ausgeführt. Die folgenden Container-Ergebnisse beziehen sich auf Version 1.0.0.
 
 
 Das Paket wurde unter Docker Desktop auf Linux arm64 gebaut. Anmeldung, Kalender-Abo und Datenerhalt nach Container-Neustart wurden mit einem isolierten Test-Volume geprüft. Ein Start im echten Home-Assistant-Supervisor sowie ein amd64-Prüflauf stehen noch aus.

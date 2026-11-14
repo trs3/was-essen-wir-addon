@@ -1,3 +1,18 @@
+# 1.2.0
+
+- Neue helle und dunkle Farbgestaltung: Vorschläge blau, eingeplante Gerichte grün, vergangene ungekochte Planungen orange und Gekochtes lila.
+- Einheitliche Statusbezeichnung „Eingeplant“, passende Farblegenden und kontrastreichere rahmenlose Buttons und Navigation.
+- Kompaktere Wochenplankarten mit Datum unter dem Wochentag, Status rechts oben und den Aktionen ↻, „Selbst wählen“ und ✓. Bereits eingeplante Gerichte benötigen keine erneute Bestätigung.
+- „Tag freilassen“ liegt im Auswahlfenster unter „Einplanen“; Datum und Planungsbutton stehen gemeinsam oben.
+- Tageskarte mit vorhandenen Notizen und Zutaten, stabilen Aktionsabständen und ohne Vorschlags-/Planungsaktionen nach dem Kochen.
+- Erfolgsmeldungen schweben über der Seite und verschwinden nach fünf Sekunden ohne Layoutverschiebung.
+- Gerichtskarten mit Tags oben, farbiger Aufwand-Kennzeichnung mit Symbolen und sichtbarer Inaktiv-Markierung.
+- Gerichtsname als live aktualisierte Dialogüberschrift, höhere Dropdowns und auswählbares Lieblingsgericht-Herz neben dem Schließen-Button.
+- Historienbuttons mit gemeinsamen Abständen, Haken für Kochbestätigung und Papierkorb zum Löschen.
+- „Statistiken“ im Chart-Stil mit Ranglisten, Häufigkeitsbalken und mehr Abstand zwischen den Abschnitten.
+
+Bestehende Daten und Einstellungen bleiben bei einem Update erhalten. Vorher eine Sicherung erstellen; zum Aktualisieren nicht deinstallieren.
+
 # 1.1.1
 
 - Darstellungsfehler bei freien Tagen in der Historie und im Wochenplan behoben: Statuszeilen bleiben linksbündig und erhalten keine übergroßen Innenabstände.

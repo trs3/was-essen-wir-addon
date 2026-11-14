@@ -12,6 +12,7 @@ require.extensions['.tsx'] = (module, filename) => {
   });
   module._compile(outputText, filename);
 };
+require.extensions['.ts'] = require.extensions['.tsx'];
 const {CookingHistory} = require('../src/CookingHistory.tsx');
 const props = {
   today: '2026-11-13', plans: [], history: [],
@@ -19,7 +20,7 @@ const props = {
   onCook() {}, onChoose() {}, onDelete() {}, onAdd() {},
 };
 const render = overrides => renderToStaticMarkup(React.createElement(CookingHistory, {...props, ...overrides}));
-const row = (html, day) => html.split('<div class="history-row">').find(part => part.includes(`dateTime="${day}"`));
+const row = (html, day) => html.split(/<div class="history-row"[^>]*>/).find(part => part.includes(`dateTime="${day}"`));
 
 test('lists every day including gaps across month boundaries, newest first, excluding future plans', () => {
   const html = render({plans: [{day: '2026-11-14', dish_id: 2, status: 'suggested'}]});
@@ -38,7 +39,7 @@ test('unconfirmed, confirmed and fixed proposals can be cooked directly or repla
     const today = row(html, props.today);
     assert.match(today, /<strong>Pasta<\/strong>/);
     assert.match(today, /noch nicht als gekocht erfasst/);
-    assert.match(today, />Gekocht<\/button>/);
+    assert.match(today, /aria-label="[^"]*: Als gekocht speichern"/);
     assert.match(today, />Etwas anderes gekocht<\/button>/);
     assert.doesNotMatch(today, /✓ Gekocht/);
   }
@@ -52,14 +53,14 @@ test('actual cooking takes precedence while preserving the original proposal as 
   assert.match(today, /Geplant: Pasta/);
   assert.match(today, />Ändern<\/button>/);
   assert.match(today, /Kochereignis vom .* löschen/);
-  assert.doesNotMatch(today, />Gekocht<\/button>/);
+  assert.doesNotMatch(today, /aria-label="[^"]*: Als gekocht speichern"/);
 });
 
 test('free days permit backfilling without a direct cook button', () => {
   const today = row(render({plans: [{day: props.today, dish_id: null, status: 'empty'}]}), props.today);
   assert.match(today, /Bewusst frei/);
   assert.match(today, /Gericht nachtragen/);
-  assert.doesNotMatch(today, />Gekocht<\/button>/);
+  assert.doesNotMatch(today, /aria-label="[^"]*: Als gekocht speichern"/);
 });
 
 test('cooking without any original proposal remains visible', () => {
@@ -71,7 +72,7 @@ test('cooking without any original proposal remains visible', () => {
 
 test('prevents repeated cooking actions while a save is pending', () => {
   const today = row(render({busy: true, plans: [{day: props.today, dish_id: 1, status: 'suggested'}]}), props.today);
-  assert.match(today, /disabled="">Gekocht/);
+  assert.match(today, /aria-label="[^"]*: Als gekocht speichern" disabled=""/);
   assert.match(today, /disabled="">Etwas anderes gekocht/);
 });
 
@@ -96,10 +97,10 @@ test('row actions pass the exact date, proposed dish or cooking event to their h
     const tree = renderTree({plans: [{day: props.today, dish_id: 1, status: 'suggested'}], history: [event],
       onCook: (...args) => calls.push(args), onChoose: (...args) => calls.push(args), onDelete: (...args) => calls.push(args)});
     const buttons = elements(tree, element => element.type === 'button');
-    buttons.find(button => button.props.children === 'Gekocht').props.onClick();
+    buttons.find(button => button.props['aria-label']?.endsWith('Als gekocht speichern')).props.onClick();
     buttons.find(button => button.props.children === 'Etwas anderes gekocht').props.onClick();
     buttons.find(button => button.props.children === 'Ändern').props.onClick();
-    buttons.find(button => button.props.children === '×').props.onClick();
+    buttons.find(button => button.props['aria-label']?.endsWith('löschen')).props.onClick();
     assert.deepEqual(calls, [[props.today, 1], [props.today], [event.day, event], [event]]);
   });
 });
@@ -117,4 +118,20 @@ test('loading older days exposes older saved proposals and cooking events', () =
     assert.ok(dates.includes('2026-09-20'));
     assert.ok(elements(expanded, element => element.type === 'strong').some(element => element.props.children === 'Suppe'));
   });
+});
+
+
+test('past firm plans turn orange until cooked, while suggestions and free days keep their state', () => {
+  const {planState} = require('../src/planState.ts');
+  for (const status of ['confirmed', 'fixed']) {
+    assert.equal(planState('2026-11-12', props.today, status, false), 'overdue');
+    assert.equal(planState(props.today, props.today, status, false), status);
+    assert.equal(planState('2026-11-14', props.today, status, false), status);
+    assert.equal(planState('2026-11-12', props.today, status, true), 'cooked');
+    const html = render({plans: [{day: '2026-11-12', dish_id: 1, status}]});
+    assert.match(html, /class="history-row" data-state="overdue"/);
+  }
+  assert.equal(planState('2026-11-12', props.today, 'suggested', false), 'suggested');
+  assert.equal(planState('2026-11-12', props.today, 'empty', false), 'empty');
+  assert.equal(planState('2026-11-12', props.today, undefined, false), 'open');
 });

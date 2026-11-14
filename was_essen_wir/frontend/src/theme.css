@@ -1,0 +1,273 @@
+/* Palette from the supplied reference. Text stays on quiet surfaces;
+   the full-strength gradients mark the different planning states. */
+:root {
+  --bg: #f5f4fc;
+  --card: #ffffff;
+  --text: #282442;
+  --muted: #66617b;
+  --line: #dedbed;
+  --green: #5142c7;
+  --soft: #eeebfb;
+  --shadow: 0 8px 35px #30256009;
+  --suggested-gradient: linear-gradient(115deg, #299bff, #1200ff);
+  --confirmed-gradient: linear-gradient(115deg, #00ff5b, #0014ff);
+  --overdue-gradient: linear-gradient(115deg, #ffe53b, #ff2525);
+  --cooked-gradient: linear-gradient(115deg, #ff2cdf, #0014ff);
+  --neutral-gradient: linear-gradient(115deg, #a8a3be, #77718d);
+  --suggested-accent: #126bac;
+  --confirmed-accent: #15724b;
+  --overdue-accent: #99500f;
+  --cooked-accent: #15724b;
+  --cooked-edge: #8055c6;
+  --cooked-surface: linear-gradient(120deg, #f6edff, #eee7ff);
+  --suggested-surface: linear-gradient(120deg, #e7f0ff, #e6eaff);
+  --confirmed-surface: linear-gradient(120deg, #edfff3, #eef7ff);
+  --overdue-surface: linear-gradient(120deg, #fff8dd, #ffede3);
+  --quiet-surface: #f5f4fa;
+  --hero-wash: #ffffffbd;
+  --warm-surface: #fff2e2;
+  --warm-text: #8b420c;
+  --danger-surface: #ffedf3;
+  --danger-text: #a51b50;
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: light;
+}
+
+:root[data-theme=dark] {
+  --bg: #1d1b33;
+  --card: #27243f;
+  --text: #f5f2ff;
+  --muted: #b9b4ce;
+  --line: #45405f;
+  --green: #bdb3ff;
+  --soft: #383052;
+  --shadow: 0 10px 36px #0b091d30;
+  --suggested-accent: #6ce5ff;
+  --confirmed-accent: #82f6ad;
+  --overdue-accent: #ffd092;
+  --cooked-accent: #82f6ad;
+  --cooked-edge: #cfb0ff;
+  --cooked-surface: linear-gradient(120deg, #3a2852, #2e2350);
+  --suggested-surface: linear-gradient(120deg, #243c68, #292d60);
+  --confirmed-surface: linear-gradient(120deg, #213c3b, #252f4a);
+  --overdue-surface: linear-gradient(120deg, #443925, #452c2a);
+  --quiet-surface: #242138;
+  --hero-wash: #1d1b33b8;
+  --warm-surface: #45313a;
+  --warm-text: #ffd092;
+  --danger-surface: #46243c;
+  --danger-text: #ffa1c5;
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+  --bg: #1d1b33;
+  --card: #27243f;
+  --text: #f5f2ff;
+  --muted: #b9b4ce;
+  --line: #45405f;
+  --green: #bdb3ff;
+  --soft: #383052;
+  --shadow: 0 10px 36px #0b091d30;
+  --suggested-accent: #6ce5ff;
+  --confirmed-accent: #82f6ad;
+  --overdue-accent: #ffd092;
+  --cooked-accent: #82f6ad;
+  --cooked-edge: #cfb0ff;
+  --cooked-surface: linear-gradient(120deg, #3a2852, #2e2350);
+  --suggested-surface: linear-gradient(120deg, #243c68, #292d60);
+  --confirmed-surface: linear-gradient(120deg, #213c3b, #252f4a);
+  --overdue-surface: linear-gradient(120deg, #443925, #452c2a);
+  --quiet-surface: #242138;
+  --hero-wash: #1d1b33b8;
+  --warm-surface: #45313a;
+  --warm-text: #ffd092;
+  --danger-surface: #46243c;
+  --danger-text: #ffa1c5;
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: dark;
+  }
+}
+
+[data-state] {
+  --state-gradient: var(--neutral-gradient);
+  --state-accent: var(--muted);
+  --state-surface: var(--quiet-surface);
+}
+[data-state=suggested] { --state-gradient: var(--suggested-gradient); --state-accent: var(--suggested-accent); --state-surface: var(--suggested-surface); }
+[data-state=confirmed] { --state-gradient: var(--confirmed-gradient); --state-accent: var(--confirmed-accent); --state-surface: var(--confirmed-surface); }
+[data-state=fixed] { --state-gradient: var(--confirmed-gradient); --state-accent: var(--confirmed-accent); --state-surface: var(--confirmed-surface); }
+[data-state=overdue] { --state-gradient: var(--overdue-gradient); --state-accent: var(--overdue-accent); --state-surface: var(--overdue-surface); }
+[data-state=cooked] { --state-gradient: var(--cooked-gradient); --state-accent: var(--cooked-edge); --state-surface: var(--cooked-surface); }
+
+.day[data-state] { position: relative; overflow: hidden; background: var(--state-surface); }
+.day[data-state]::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--state-gradient); }
+.day.current .day-weekday { color: var(--green); }
+.status { display: inline-flex; width: fit-content; max-width: 100%; padding: 6px 10px; border:0; border-radius: 9px; font-size: 11px; line-height: 1.5; font-weight: 600; background: var(--card); }
+.status, .status.confirmed, .status.fixed { color: var(--state-accent, var(--muted)); }
+.status.cooked, .hero[data-state=cooked] .badge { color: var(--cooked-accent); }
+.day .status.cooked { color: var(--cooked-edge); }
+.cooking-history .history-row { margin-top: 8px; padding: 14px 12px; border:0; border-left:0; border-radius: 12px; background: var(--state-surface); }
+.history-day .history-status { background: transparent; border:0; padding: 0; }
+.plan-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 0 0 22px; }
+.plan-legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.plan-legend span::before { content: ''; width: 28px; height: 14px; border-radius: 5px; background: var(--state-surface); }
+
+.hero[data-state] { background: linear-gradient(var(--hero-wash), var(--hero-wash)), var(--state-gradient); color: var(--text); border:0; }
+.hero[data-state=empty], .hero[data-state=open] { background: var(--quiet-surface); }
+.hero .eyebrow, .hero p, .hero-top { color: var(--text); }
+.hero .badge { background: var(--card); color: var(--state-accent);  }
+.hero .category { background: var(--card); color: var(--state-accent);  }
+.plate { background: var(--card);  box-shadow: 0 12px 30px #14112b18; }
+.plate div { color: var(--state-accent);  }
+.primary, .brand-mark { background: linear-gradient(115deg, #147394, #4231c8);  color: #fff; }
+.light { background: var(--card); color: var(--text);  }
+.light-outline { background: var(--soft); color: var(--text);  }
+.text-light { color: var(--text); }
+.subtle { background: var(--soft); }
+.dish-icon { color: var(--overdue-accent); }
+.category[data-category] { background: var(--soft); color: var(--green); }
+.category[data-category="Nudelgerichte"], .category[data-category="Kartoffelgerichte"], .category[data-category="Pizza und Ofengerichte"] { background: var(--warm-surface); color: var(--warm-text); }
+.category[data-category="Fischgerichte"], .category[data-category="Reisgerichte"] { background: var(--suggested-surface); color: var(--suggested-accent); }
+.category[data-category="Süßspeisen"], .category[data-category="Fleischgerichte"] { background: var(--overdue-surface); color: var(--overdue-accent); }
+.error { background: var(--danger-surface); color: var(--danger-text); }
+.danger { color: var(--danger-text); }
+.notice { background: var(--warm-surface); color: var(--warm-text); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline-color: var(--green); }
+input[type=checkbox], .frequency-control input[type=range], .stat meter { accent-color: var(--green); }
+
+
+/* Make interaction and the current destination easy to spot. */
+.header-page { font-size: clamp(18px, 2.4vw, 26px); font-weight: 700; color: var(--text); text-align: right; }
+header { gap: 16px; }
+nav {  box-shadow: 0 10px 35px #08051f55; }
+nav button { color: var(--text); border:0; border-radius: 15px; }
+nav button.active { position: relative; background: linear-gradient(115deg, #147394, #4231c8); color: #fff;  box-shadow: none; font-weight: 800; }
+nav button.active span { color: #fff; }
+.weekday-settings .quick-dish-warning { margin: 16px 0 0; padding: 14px 16px; border:0;  border-radius: 12px; background: var(--overdue-surface); color: var(--overdue-accent); font-size: 13px; font-weight: 600; line-height: 1.7; }
+@media (hover: hover) {
+  button:not(.dish-card):not(:disabled):hover { background: var(--green); color: var(--bg);  filter: none; box-shadow: none; }
+  button.primary:not(:disabled):hover, nav button.active:not(:disabled):hover { background: linear-gradient(115deg, #147394, #4231c8); color: #fff; filter: brightness(1.25); }
+  nav button:not(.active):hover span { color: inherit; }
+  button.dish-card:not(:disabled):hover { background: var(--soft);  box-shadow: none; filter: none; }
+}
+@media (max-width: 400px) {
+  header { gap: 8px; padding-left: 14px; padding-right: 14px; }
+  header .brand { font-size: 18px; gap: 8px; }
+  .header-page { font-size: 17px; }
+}
+
+/* Separate controls through surfaces instead of outlines or frame effects. */
+input, select, textarea { background: var(--quiet-surface); }
+.help-button { background: var(--soft); }
+.day[data-state]::before { display: none; }
+
+/* Use the page surface to separate actions from colored meal cards. */
+.day-actions button, .history-actions button, .hero-actions button { background: var(--bg); color: var(--text); }
+
+/* Tags use the same quiet surface as the meal action buttons. */
+.tags span, .category, .category[data-category], .hero .category { background: var(--bg); }
+
+
+/* Dish cards begin at the same inset as the weekly plan cards. */
+.dish-grid .dish-card { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 23px; gap: 0; }
+.dish-card-top { display: flex; align-items: flex-start; gap: 10px; }
+.dish-card-tags { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.dish-card .category, .dish-tag { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 10px; background: var(--bg); font-size: 11px; font-weight: 500; line-height: 1.5; }
+.dish-tag { color: var(--muted); }
+.dish-favorite { flex-shrink: 0; color: var(--overdue-accent); font-size: 20px; line-height: 28px; }
+.dish-grid .dish-card h3 { margin: 18px 0 10px; line-height: 1.2; }
+.dish-grid .dish-card p { margin: 0; font-size: 12px; font-weight: 400; }
+.dish-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-top: 18px; margin-top: auto; }
+.effort-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 10px; background: var(--bg); font-size: 12px; font-weight: 600; line-height: 1.5; }
+.effort-badge svg { flex-shrink: 0; }
+.effort-badge[data-effort=quick] { color: var(--confirmed-accent); }
+.effort-badge[data-effort=normal] { color: var(--suggested-accent); }
+.effort-badge[data-effort=elaborate] { color: var(--overdue-accent); }
+@media (max-width: 760px) {
+  .dish-grid .dish-card { padding: 22px; }
+}
+@media (max-width: 420px) {
+  .dish-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Native select controls need an explicit height, especially in Safari. */
+select { height: 46px; min-height: 46px; padding: 10px 36px 10px 12px; font-size: 16px; line-height: 24px; }
+
+.dish-editor > .section-title { flex-wrap: nowrap; }
+.dish-editor > .section-title h2 { min-width: 0; overflow-wrap: anywhere; }
+.dish-editor-header-actions { display: flex; flex-shrink: 0; align-items: center; gap: 8px; }
+.dish-editor-header-actions button { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; padding: 8px; }
+.favorite-toggle[aria-pressed=true] { color: var(--danger-text); background: var(--danger-surface); }
+
+
+.cooking-stats { margin-top: 28px; margin-bottom: 32px; }
+.cooking-stats .section-title { margin-bottom: 12px; }
+.cooking-stats h3 { margin: 0; }
+.stats-total, .chart-count { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stats-total { padding: 8px 12px; border-radius: 10px; background: var(--bg); color: var(--green); }
+.cooking-stats .stats-caption { font-size: 12px; line-height: 1.6; margin: 0 0 18px; }
+.cooking-stats .stats-section { margin-top: 34px; }
+.cooking-stats .stats-section + .stats-section { margin-top: 42px; }
+.cooking-stats h4 { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 16px; font-size: 15px; }
+.chart-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+.chart-list { list-style: none; margin: 0; padding: 0; }
+.chart-row { display: flex; align-items: center; gap: 14px; padding: 13px 0; }
+.chart-rank, .chart-comeback { flex: 0 0 32px; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; color: var(--green); }
+.chart-row:first-child .chart-rank { color: var(--text); }
+.chart-info { flex: 1; min-width: 0; }
+.chart-name { display: block; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.chart-info small { display: block; margin-top: 4px; }
+.chart-count { color: var(--muted); }
+.chart-info meter { display: block; width: 100%; height: 12px; margin-top: 8px; accent-color: var(--green); }
+.chart-info meter::-webkit-meter-bar { background: var(--bg); border: 0; border-radius: 6px; }
+.chart-info meter::-webkit-meter-optimum-value { background: linear-gradient(115deg, #147394, #4231c8); border-radius: 6px; }
+.chart-info meter::-moz-meter-bar { background: linear-gradient(115deg, #147394, #4231c8); border-radius: 6px; }
+
+.hero .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; }
+.hero-actions button { flex: 0 0 auto; min-width: 0; min-height: 44px; padding: 8px 16px; font-size: 14px; white-space: nowrap; }
+.hero-actions .day-symbol { width: 44px; padding: 6px; font-size: 21px; line-height: 1; }
+
+.hero .hero-top { align-items: flex-start; }
+.hero .day-date { text-align: left; }
+.hero .day-weekday { font-size: 16px; font-weight: 700; line-height: 1.25; color: var(--text); }
+.hero .day-date time { font-size: 16px; color: var(--muted); }
+.hero-recipe { margin: 24px 0; text-align: left; }
+.hero-recipe section + section { margin-top: 22px; }
+.hero .hero-recipe h3 { margin: 0 0 10px; font-size: 20px; }
+.hero .hero-recipe p { margin: 0; font-size: 14px; }
+.hero-recipe ul { margin: 0; padding: 0; list-style: none; }
+.hero-recipe li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 6px 0; font-size: 14px; line-height: 1.6; }
+.ingredient-amount { flex-shrink: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Transient feedback floats above the layout without moving the page. */
+.notice { position: fixed; z-index: 50; top: max(18px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 36px); overflow-y: auto; margin: 0; box-shadow: 0 12px 36px #08051f40; }
+.notice > button { flex-shrink: 0; }
+
+/* Keep actions in place when a meal name wraps onto a second line. */
+.hero { display: flex; flex-direction: column; }
+.hero > * { flex-shrink: 0; }
+.hero > .category { align-self: center; }
+.hero h2 { width: 100%; min-height: 2.2em; line-height: 1.1; display: flex; align-items: center; justify-content: center; }
+.hero .hero-actions { margin-top: auto; padding-top: 26px; }
+.plan-grid .day h3, .dish-grid .dish-card h3 { min-height: 2.4em; line-height: 1.2; }
+.plan-grid .day-actions { margin-top: auto; padding-top: 8px; }
+
+.hero > .eyebrow { margin-top: 28px; }
+
+/* A longer correction label in the sidebar must not stretch the meal card. */
+.today-grid { align-items: start; }
+.today-alternative-actions { display: grid; gap: 8px; }
+.today-alternative-actions > button { width: 100%; }
+
+.upcoming-plan-button { background: var(--bg); color: var(--text); padding: 8px 16px; min-height: 44px; font-size: 14px; margin-top: 12px; }
+
+.dish-grid .dish-card-inactive { background: var(--quiet-surface); }
+.dish-card-inactive h3 { color: var(--muted); }
+.dish-card-inactive .dish-card-tags .category, .dish-card-inactive .dish-tag { color: var(--muted); }
+.inactive-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: var(--soft); color: var(--text); font-size: 11px; font-weight: 700; line-height: 1.5; }
+.inactive-badge::before { content: 'Ⅱ'; font-size: 12px; }
