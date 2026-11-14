@@ -24,10 +24,10 @@ const row = (html, day) => html.split(/<div class="history-row"[^>]*>/).find(par
 
 test('lists every day including gaps across month boundaries, newest first, excluding future plans', () => {
   const html = render({plans: [{day: '2026-11-14', dish_id: 2, status: 'suggested'}]});
-  assert.equal((html.match(/<time /g) || []).length, 30);
+  assert.equal((html.match(/<time /g) || []).length, 7);
   assert.ok(html.indexOf('dateTime="2026-11-13"') < html.indexOf('dateTime="2026-11-12"'));
-  assert.ok(row(html, '2026-10-15'));
-  assert.ok(!html.includes('dateTime="2026-10-14"'));
+  assert.ok(row(html, '2026-11-07'));
+  assert.ok(!html.includes('dateTime="2026-11-06"'));
   assert.ok(!html.includes('dateTime="2026-11-14"'));
   assert.match(row(html, '2026-11-12'), /Kein Vorschlag gespeichert/);
   assert.match(row(html, '2026-11-12'), /Gericht nachtragen/);
@@ -78,7 +78,7 @@ test('prevents repeated cooking actions while a save is pending', () => {
 
 function withComponentState(check) {
   const original = React.useState;
-  let count = 30;
+  let count = 7;
   React.useState = () => [count, update => { count = update(count); }];
   try { check(overrides => CookingHistory({...props, ...overrides})); }
   finally { React.useState = original; }
@@ -110,13 +110,19 @@ test('loading older days exposes older saved proposals and cooking events', () =
     const overrides = {plans: [{day: '2026-10-01', dish_id: 1, status: 'suggested'}],
       history: [{id: 5, day: '2026-09-20', dish_id: 2, version: 1}]};
     const tree = renderTree(overrides);
-    elements(tree, element => element.props?.className === 'history-more')[0].props.onClick();
+    assert.equal(elements(tree, element => element.type === 'time').length, 7);
+    elements(tree, element => element.props?.className === 'history-older')[0].props.onToggle({currentTarget: {open: true}});
+    const opened = renderTree(overrides);
+    assert.equal(elements(opened, element => element.type === 'time').length, 37);
+    elements(opened, element => element.props?.className === 'history-more')[0].props.onClick();
     const expanded = renderTree(overrides);
     const dates = elements(expanded, element => element.type === 'time').map(element => element.props.dateTime);
-    assert.equal(dates.length, 60);
+    assert.equal(dates.length, 67);
     assert.ok(dates.includes('2026-10-01'));
     assert.ok(dates.includes('2026-09-20'));
     assert.ok(elements(expanded, element => element.type === 'strong').some(element => element.props.children === 'Suppe'));
+    elements(expanded, element => element.props?.className === 'history-older')[0].props.onToggle({currentTarget: {open: false}});
+    assert.equal(elements(renderTree(overrides), element => element.type === 'time').length, 7);
   });
 });
 

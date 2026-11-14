@@ -6,23 +6,23 @@ Diese lokale App (früher „Add-on“) läuft in eurer vorhandenen Home-Assista
 
 Im App-/Add-on-Store unter **⋮ → Repositories** die Adresse `https://github.com/trs3/was-essen-wir-addon` hinzufügen. Anschließend **Was essen wir? → Installieren → Starten → Weboberfläche öffnen** wählen und **Beim Booten starten** aktivieren. Der Supervisor baut die enthaltenen Quellen. Die lokale Kopie über Samba ist bei dieser Installationsart nicht erforderlich.
 
-Eine bisherige Installation über deren JSON-Export sichern. In der neuen App einen Haushaltszugang anlegen und unter **Historie → Sicherung wiederherstellen** die Datei auswählen. Daten der Zielinstallation werden dabei ersetzt. Den Kalender-Link in der Zielinstallation neu erstellen.
+Eine bisherige Installation über deren JSON-Export sichern. In der neuen App einen Haushaltszugang anlegen und unter **Einstellungen → Sicherung wiederherstellen** die Datei auswählen. Daten der Zielinstallation werden dabei ersetzt. Den Kalender-Link in der Zielinstallation neu erstellen.
 
 ## Alternative: lokale Installation vom Mac
 
-1. In der bisherigen Essensplan-App unter **Historie** eine JSON-Sicherung herunterladen.
+1. In der bisherigen Essensplan-App unter **Einstellungen** eine JSON-Sicherung herunterladen.
 2. Das bereitgestellte ZIP entpacken. Es enthält einen Ordner **was_essen_wir**, in dem direkt `config.json`, `Dockerfile`, `run.py`, `backend/` und `frontend/` liegen.
 3. In Home Assistant **Samba share** aus dem App-/Add-on-Store installieren, einen Samba-Benutzerzugang konfigurieren und starten. Im Mac-Finder **Gehe zu → Mit Server verbinden** (`⌘K`) und `smb://homeassistant.local` eingeben; alternativ die IP-Adresse der HA-VM verwenden.
 4. Den entpackten Ordner **was_essen_wir** in die Freigabe **local_apps** kopieren. Bei älteren HA-Versionen heißt die Freigabe **addons**. Ergebnis: `local_apps/was_essen_wir/config.json` beziehungsweise `addons/was_essen_wir/config.json`. Nicht nur die ZIP-Datei ablegen und keine zusätzliche Ordnerebene einfügen.
 5. In Home Assistant **Einstellungen → Apps → App installieren** öffnen (bei älteren Versionen **Add-ons → Add-on-Store**). Im Menü oben rechts **Nach Updates suchen** wählen und die Seite neu laden. Unter **Lokale Apps / Lokale Add-ons** erscheint **Was essen wir?**.
 6. **Installieren** wählen und den Build abwarten. Anschließend **Starten**, **Beim Booten starten** aktivieren und **Weboberfläche öffnen** wählen. Bei Fehlern die App-Protokolle prüfen.
-7. Alternativ direkt `http://IP-DER-HA-VM:3000` öffnen. Einen Haushaltszugang mit mindestens sechs Zeichen anlegen und unter **Historie → Sicherung wiederherstellen** die JSON-Datei vom Mac auswählen. Vorhandene Daten der Zielinstallation werden dabei ersetzt. Danach beide iPhones über diese Serveradresse verbinden.
+7. Alternativ direkt `http://IP-DER-HA-VM:3000` öffnen. Einen Haushaltszugang mit mindestens sechs Zeichen anlegen und unter **Einstellungen → Sicherung wiederherstellen** die JSON-Datei vom Mac auswählen. Vorhandene Daten der Zielinstallation werden dabei ersetzt. Danach beide iPhones über diese Serveradresse verbinden.
 
 Die Schritte zum lokalen App-Verzeichnis entsprechen der [offiziellen HA-Anleitung](https://contributors.home-assistant.io/apps/first-app/). Die App ist eigenständig erreichbar; ihre Oberfläche wird mit dieser Version in einem eigenen Browserfenster geöffnet. Home-Assistant-Anmeldung und Essensplan-Passwort sind getrennt.
 
 ## Zugriff, Kalender und Optionen
 
-Der Standardport ist **3000** auf der IP der HA-VM, nicht der Proxmox-IP. Ist er bereits belegt, im Netzwerkbereich der App einen anderen freien Host-Port für `8000/tcp` einstellen und die App neu starten. Das private Kalender-Abo anschließend in der neuen Installation unter **Historie** neu erstellen und auf den iPhones neu abonnieren. JSON überträgt den Kalender-Schlüssel und das Passwort absichtlich nicht.
+Der Standardport ist **3000** auf der IP der HA-VM, nicht der Proxmox-IP. Ist er bereits belegt, im Netzwerkbereich der App einen anderen freien Host-Port für `8000/tcp` einstellen und die App neu starten. Das private Kalender-Abo anschließend in der neuen Installation unter **Einstellungen** neu erstellen und auf den iPhones neu abonnieren. JSON überträgt den Kalender-Schlüssel und das Passwort absichtlich nicht.
 
 Für den HTTP-Zugriff im Heimnetz bleiben die Optionen unverändert:
 

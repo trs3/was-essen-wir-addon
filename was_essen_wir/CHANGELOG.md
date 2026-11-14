@@ -1,3 +1,16 @@
+# 1.3.0
+
+- Historie zeigt zunächst sieben Tage; ältere Einträge lassen sich auf- und zuklappen sowie in Schritten von 30 Tagen nachladen.
+- Statistiken stehen neben den vergangenen Tagen, auf kleinen Bildschirmen darunter.
+- Eigene Einstellungen-Ansicht für Haushalt, Darstellung, Kalender und Datensicherung, auf jeder Seite rechts oben erreichbar.
+- Mehr Abstand zwischen Einstellungsbutton und Seitennamen; Datenblock ohne große Lücke unter dem Kalenderblock.
+- Bei abweichend gekochten Gerichten steht „Geplant: …“ mit dem Kochstatus in einer gemeinsamen Zeile. Textelemente haben mehr Abstand.
+- Verständlichere Rückfrage zu bereits eingeplanten Gerichten nach einer Kochbestätigung.
+- Farbige Aufwand-Auswahl passend zu den Gerichtskarten.
+- Fehler behoben: Bei nicht als Lieblingsgericht markierten Gerichten wird keine „0“ mehr angezeigt.
+
+Bestehende Daten und Einstellungen bleiben bei einem Update erhalten. Vorher eine Sicherung erstellen; zum Aktualisieren nicht deinstallieren.
+
 # 1.2.0
 
 - Neue helle und dunkle Farbgestaltung: Vorschläge blau, eingeplante Gerichte grün, vergangene ungekochte Planungen orange und Gekochtes lila.

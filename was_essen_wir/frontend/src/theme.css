@@ -271,3 +271,33 @@ select { height: 46px; min-height: 46px; padding: 10px 36px 10px 12px; font-size
 .dish-card-inactive .dish-card-tags .category, .dish-card-inactive .dish-tag { color: var(--muted); }
 .inactive-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: var(--soft); color: var(--text); font-size: 11px; font-weight: 700; line-height: 1.5; }
 .inactive-badge::before { content: 'Ⅱ'; font-size: 12px; }
+
+
+.history-grid { align-items: start; }
+.history-grid > .cooking-stats { margin-top: 0; }
+.settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.settings-grid > * { min-width: 0; margin-bottom: 0; }
+.header-context { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+.settings-button { min-height: 30px; padding: 5px 10px; font-size: 12px; background: var(--quiet-surface); color: var(--muted); }
+.settings-button[aria-current=page] { color: var(--text); background: var(--soft); }
+.history-older { margin: 20px 0 0; }
+.history-older > summary { padding: 12px 16px; border-radius: 12px; background: var(--bg); color: var(--text); min-height: 44px; font-size: 14px; }
+.history-older[open] > summary { margin-bottom: 12px; }
+@media (max-width: 760px) {
+  .settings-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}
+
+header { min-height: 100px; padding-top: 12px; padding-bottom: 12px; }
+.settings-column { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.settings-column > * { margin: 0; }
+.history-day { display: flex; flex-direction: column; gap: 8px; }
+.history-day strong { margin: 0; }
+.history-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 11px; line-height: 1.5; font-weight: 600; }
+.history-day .history-meta > .history-status, .history-day .history-meta > .history-planned { display: inline; margin: 0; padding: 0; font: inherit; }
+.history-planned { color: var(--muted); }
+
+/* Match the effort picker to the badges on dish cards. */
+#dish-effort[data-effort=quick], #dish-effort option[data-effort=quick] { color: var(--confirmed-accent); }
+#dish-effort[data-effort=normal], #dish-effort option[data-effort=normal] { color: var(--suggested-accent); }
+#dish-effort[data-effort=elaborate], #dish-effort option[data-effort=elaborate] { color: var(--overdue-accent); }
+#dish-effort { font-weight: 600; }

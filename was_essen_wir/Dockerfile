@@ -9,7 +9,7 @@ RUN npm run build
 
 FROM python:3.13-slim
 ARG BUILD_ARCH
-ARG BUILD_VERSION=1.2.0
+ARG BUILD_VERSION=1.3.0
 LABEL io.hass.name="Was essen wir?" io.hass.description="Familien-Essensplan" io.hass.type="addon" io.hass.arch="${BUILD_ARCH}" io.hass.version="${BUILD_VERSION}"
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 DATABASE_PATH=/data/essen.sqlite3 STATIC_DIR=/app/static TZ=Europe/Berlin
 WORKDIR /app

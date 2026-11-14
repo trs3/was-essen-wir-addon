@@ -29,16 +29,12 @@ const statusLabels: Record<string, string> = {
 };
 
 export function CookingHistory({today, plans, history, dishes, busy, onCook, onChoose, onDelete, onAdd}: Props) {
-  const [visibleDays, setVisibleDays] = useState(30);
+  const [visibleDays, setVisibleDays] = useState(7);
   const plansByDay = new Map(plans.map(plan => [plan.day, plan]));
   const historyByDay = new Map(history.map(event => [event.day, event]));
   const dishesById = new Map(dishes.map(dish => [dish.id, dish]));
 
-  return <section className="card cooking-history">
-    <div className="section-title"><h3>Eure vergangenen Tage</h3><button disabled={busy} onClick={onAdd}>＋ Nachtragen</button></div>
-    <p>Vorschläge und tatsächlich gekochte Gerichte Tag für Tag. Mit „Gekocht“ bestätigt ihr direkt, was auf dem Tisch stand. Nur erfasste Kochereignisse zählen für die Statistik.</p>
-    <PlanLegend includePast/>
-    {Array.from({length: visibleDays}, (_, index) => previousDay(today, index)).map(day => {
+  const renderedDays = Array.from({length: visibleDays}, (_, index) => previousDay(today, index)).map(day => {
       const plan = plansByDay.get(day), event = historyByDay.get(day);
       const proposed = plan?.dish_id ? dishesById.get(plan.dish_id) : undefined;
       const actual = event ? dishesById.get(event.dish_id) : undefined;
@@ -47,10 +43,10 @@ export function CookingHistory({today, plans, history, dishes, busy, onCook, onC
         <div className="history-day">
           <time dateTime={day}>{date}</time>
           <strong>{event ? actual?.name || 'Unbekanntes Gericht' : proposed?.name || (plan?.status === 'empty' ? 'Bewusst frei' : 'Kein Vorschlag gespeichert')}</strong>
-          <span className={'history-status status ' + (event ? 'cooked' : plan?.status || '')}>
+          <div className="history-meta"><span className={'history-status status ' + (event ? 'cooked' : plan?.status || '')}>
             {event ? '✓ Gekocht' : proposed ? statusLabels[plan?.status || ''] || 'Noch nicht als gekocht erfasst' : 'Noch nicht als gekocht erfasst'}
           </span>
-          {event && proposed && proposed.id !== event.dish_id && <small>Geplant: {proposed.name}</small>}
+          {event && proposed && proposed.id !== event.dish_id && <span className="history-planned">Geplant: {proposed.name}</span>}</div>
         </div>
         <div className="history-actions">
           {event ? <>
@@ -62,7 +58,17 @@ export function CookingHistory({today, plans, history, dishes, busy, onCook, onC
           </>}
         </div>
       </div>;
-    })}
-    <button className="history-more" onClick={() => setVisibleDays(count => count + 30)}>30 ältere Tage anzeigen</button>
+    });
+
+  return <section className="card cooking-history">
+    <div className="section-title"><h3>Eure vergangenen Tage</h3><button disabled={busy} onClick={onAdd}>＋ Nachtragen</button></div>
+    <p>Vorschläge und tatsächlich gekochte Gerichte Tag für Tag. Mit „Gekocht“ bestätigt ihr direkt, was auf dem Tisch stand. Nur erfasste Kochereignisse zählen für die Statistik.</p>
+    <PlanLegend includePast/>
+    {renderedDays.slice(0, 7)}
+    <details className="history-older" onToggle={event => {const open = event.currentTarget.open; setVisibleDays(count => open ? Math.max(count, 37) : 7);}}>
+      <summary>Ältere Tage anzeigen</summary>
+      {renderedDays.slice(7)}
+      <button className="history-more" onClick={() => setVisibleDays(count => count + 30)}>30 weitere Tage anzeigen</button>
+    </details>
   </section>;
 }
